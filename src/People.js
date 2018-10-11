@@ -1,6 +1,7 @@
 // Imports
 import React, { Component } from 'react';
 import Person from "./Person";
+import PersonAdd from "./PersonAdd";
 
 // Extend the Component class
 class People extends Component {
@@ -18,38 +19,52 @@ class People extends Component {
     }
   }
 
-  // onPeopleChange = (id, value) => {
-  //   this.setState(state => {
-  //     const newPeople = state.people.map(person => {
-  //       if ( person.id === id ) {
-  //         return { ...person, name: value };
-  //       } else {
-  //         return person;
-  //       }
-  //     })
-  //   })
-  // }
+  updatePersonName = (id, name) => {
+    this.setState(state => {
+      const newPeople = state.people.map(person => {
+        // if this is the same user, lets update them.
+        if (person.id === id) {
+          // lets return a new person with an updated name.
+          return {
+            ...person,
+            name: name
+          };
+        }
 
-  onPeopleChange = (id, value) => {
-    this.setState(state => ({
-      people: state.people.map(person =>
-        person.id === id
-          ? { ...person, name: value }
-          : person
-      )
-    }))
+        // return the same person, no reason to update
+        return person;
+      });
+
+      // return the new state
+      return { people: newPeople };
+    });
+  };
+
+  addPerson = person => {
+    this.setState(state=> {
+      const people = [...state.people, person];
+      return {people};
+    });
   }
 
   render() {
     const { people } = this.state;
 
-    return(
-      <ul>
-      { people.map(p =>
-        <Person key={p.id} person={p} onChange={this.onPeopleChange} />
-      )}
-      </ul>
-    );
+     return (
+       <form>
+         <PersonAdd addPerson={this.addPerson}/>
+         <ul className="people">
+           {people.map(p => (
+             <Person
+               key={p.id}
+               id={p.id}
+               name={p.name}
+               updatePersonName={this.updatePersonName}
+             />
+           ))}
+         </ul>
+       </form>
+     );
   }
 }
 

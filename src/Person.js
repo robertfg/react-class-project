@@ -1,34 +1,20 @@
-// Imports
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-// Extend the Component class
 class Person extends Component {
-
-  // Methods
-  constructor() {
-    super();
-  }
-
-  onValueChange = event => {
-    const {value} = event.target;
-    const { onChange } = this.props;
-    const { id } = this.props.person;
-
-    onChange(id, value);
-  }
+  onNameChange = event => {
+    const { id } = this.props;
+    this.props.updatePersonName(id, event.target.value);
+  };
 
   render() {
-    const { name } = this.props.person;
+    const { name } = this.props;
+
     return (
       <li>
-        <input
-          type="text"
-          value={name}
-          onChange={this.onValueChange} />
+        <input type="text" value={name} onChange={this.onNameChange} />
       </li>
     );
   }
 }
 
-// Exports
 export default Person;
