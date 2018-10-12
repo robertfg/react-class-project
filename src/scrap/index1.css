@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  padding: 10px;
+  font-family: sans-serif;
+}
+
+.people {
+  margin: 0;
+  padding: 10px;
+  list-style: none;
+}
+
+.people .person {
+  padding-bottom: 10px;
+}
